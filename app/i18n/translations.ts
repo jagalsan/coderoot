@@ -137,6 +137,7 @@ export const translations = {
       errorPhone: "Introduce un número de teléfono válido",
       errorProductType: "Selecciona un tipo de producto",
       errorBudgetRange: "Selecciona un rango de presupuesto",
+      errorProjectDescription: "Describe brevemente tu proyecto",
     },
     productTypes: {
       "app-fitness": "App de Fitness / Gimnasio",
@@ -376,6 +377,7 @@ export const translations = {
       errorPhone: "Enter a valid phone number",
       errorProductType: "Select a product type",
       errorBudgetRange: "Select a budget range",
+      errorProjectDescription: "Briefly describe your project",
     },
     productTypes: {
       "app-fitness": "Fitness / Gym App",

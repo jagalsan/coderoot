@@ -25,6 +25,7 @@ interface FieldErrors {
   phone?: string;
   productType?: string;
   budgetRange?: string;
+  projectDescription?: string;
 }
 
 export function LeadForm() {
@@ -72,6 +73,8 @@ export function LeadForm() {
         return value ? undefined : t("form.errorProductType");
       case 'budgetRange':
         return value ? undefined : t("form.errorBudgetRange");
+      case 'projectDescription':
+        return value.trim() ? undefined : t("form.errorProjectDescription");
       default:
         return undefined;
     }
@@ -97,6 +100,9 @@ export function LeadForm() {
     
     const budgetError = validateField('budgetRange', formData.budgetRange);
     if (budgetError) errors.budgetRange = budgetError;
+    
+    const descriptionError = validateField('projectDescription', formData.projectDescription);
+    if (descriptionError) errors.projectDescription = descriptionError;
     
     setFieldErrors(errors);
     return Object.keys(errors).length === 0;
@@ -396,10 +402,14 @@ export function LeadForm() {
           name="projectDescription"
           value={formData.projectDescription}
           onChange={handleChange}
+          onBlur={handleBlur}
           rows={4}
-          className="w-full px-4 py-3 rounded-lg border border-white/20 dark:border-white/20 light:border-black/20 bg-white/5 dark:bg-white/5 light:bg-black/5 text-white dark:text-white light:text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/30 dark:focus:ring-white/30 light:focus:ring-black/30 resize-none"
+          className={`w-full px-4 py-3 rounded-lg border ${fieldErrors.projectDescription && touched.projectDescription ? 'border-red-500' : 'border-white/20 dark:border-white/20 light:border-black/20'} bg-white/5 dark:bg-white/5 light:bg-black/5 text-white dark:text-white light:text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 ${fieldErrors.projectDescription && touched.projectDescription ? 'focus:ring-red-500/50' : 'focus:ring-white/30 dark:focus:ring-white/30 light:focus:ring-black/30'} resize-none`}
           placeholder={t("form.projectDescriptionPlaceholder")}
         />
+        {fieldErrors.projectDescription && touched.projectDescription && (
+          <p className={errorClassName}>{fieldErrors.projectDescription}</p>
+        )}
       </div>
 
       <div className="space-y-4">
