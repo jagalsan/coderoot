@@ -110,11 +110,11 @@ export function HeroSection() {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.4 }}
-          className="flex-1 w-full max-w-lg lg:max-w-none"
+          className="w-full lg:w-auto flex-shrink-0"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <div className="relative w-full max-w-[320px] mx-auto aspect-[9/16] rounded-3xl overflow-hidden border border-white/10 dark:border-white/10 light:border-black/10 shadow-2xl bg-white/5 dark:bg-white/5 light:bg-black/5">
+          <div className="relative w-[280px] sm:w-[320px] mx-auto aspect-[9/16] rounded-3xl overflow-hidden border border-white/10 dark:border-white/10 light:border-black/10 shadow-2xl bg-white/5 dark:bg-white/5 light:bg-black/5">
             {/* Skeleton loader */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-white/5 dark:from-white/10 dark:to-white/5 light:from-black/5 light:to-black/10 animate-pulse" />
             
