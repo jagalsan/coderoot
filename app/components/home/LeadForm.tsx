@@ -18,11 +18,22 @@ interface FormData {
   acceptPrivacy: boolean;
 }
 
+interface FieldErrors {
+  companyName?: string;
+  contactName?: string;
+  email?: string;
+  phone?: string;
+  productType?: string;
+  budgetRange?: string;
+}
+
 export function LeadForm() {
   const { t, language } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
   
   const [formData, setFormData] = useState<FormData>({
     companyName: "",
@@ -36,6 +47,67 @@ export function LeadForm() {
     acceptTerms: false,
     acceptPrivacy: false,
   });
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhone = (phone: string) => {
+    const phoneRegex = /^[\d\s\-+()]{6,}$/;
+    return phoneRegex.test(phone);
+  };
+
+  const validateField = (name: string, value: string): string | undefined => {
+    switch (name) {
+      case 'companyName':
+        return value.trim() ? undefined : t("form.errorCompanyName");
+      case 'contactName':
+        return value.trim() ? undefined : t("form.errorContactName");
+      case 'email':
+        return validateEmail(value) ? undefined : t("form.errorEmail");
+      case 'phone':
+        return validatePhone(value) ? undefined : t("form.errorPhone");
+      case 'productType':
+        return value ? undefined : t("form.errorProductType");
+      case 'budgetRange':
+        return value ? undefined : t("form.errorBudgetRange");
+      default:
+        return undefined;
+    }
+  };
+
+  const validateAllFields = (): boolean => {
+    const errors: FieldErrors = {};
+    
+    const companyError = validateField('companyName', formData.companyName);
+    if (companyError) errors.companyName = companyError;
+    
+    const contactError = validateField('contactName', formData.contactName);
+    if (contactError) errors.contactName = contactError;
+    
+    const emailError = validateField('email', formData.email);
+    if (emailError) errors.email = emailError;
+    
+    const phoneError = validateField('phone', formData.phone);
+    if (phoneError) errors.phone = phoneError;
+    
+    const productError = validateField('productType', formData.productType);
+    if (productError) errors.productType = productError;
+    
+    const budgetError = validateField('budgetRange', formData.budgetRange);
+    if (budgetError) errors.budgetRange = budgetError;
+    
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setTouched(prev => ({ ...prev, [name]: true }));
+    const error = validateField(name, value);
+    setFieldErrors(prev => ({ ...prev, [name]: error }));
+  };
 
   const estimatedBudget = useMemo(() => {
     if (!formData.productType || !formData.budgetRange) return null;
@@ -60,6 +132,11 @@ export function LeadForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    
+    // Validate all fields
+    if (!validateAllFields()) {
+      return;
+    }
     
     if (!formData.acceptTerms || !formData.acceptPrivacy) {
       setError(t("form.errorTerms"));
@@ -160,8 +237,10 @@ export function LeadForm() {
     );
   }
 
-  const inputClassName = "w-full h-12 px-4 rounded-lg border border-white/20 dark:border-white/20 light:border-black/20 bg-white/5 dark:bg-white/5 light:bg-black/5 text-white dark:text-white light:text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/30 dark:focus:ring-white/30 light:focus:ring-black/30";
+  const inputClassName = (hasError: boolean) => `w-full h-12 px-4 rounded-lg border ${hasError ? 'border-red-500' : 'border-white/20 dark:border-white/20 light:border-black/20'} bg-white/5 dark:bg-white/5 light:bg-black/5 text-white dark:text-white light:text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 ${hasError ? 'focus:ring-red-500/50' : 'focus:ring-white/30 dark:focus:ring-white/30 light:focus:ring-black/30'}`;
+  const selectClassName = (hasError: boolean) => `w-full h-12 px-4 rounded-lg border ${hasError ? 'border-red-500' : 'border-white/20 dark:border-white/20 light:border-black/20'} bg-white/5 dark:bg-white/5 light:bg-black/5 text-white dark:text-white light:text-gray-900 focus:outline-none focus:ring-2 ${hasError ? 'focus:ring-red-500/50' : 'focus:ring-white/30 dark:focus:ring-white/30 light:focus:ring-black/30'}`;
   const labelClassName = "block text-sm font-medium text-gray-300 dark:text-gray-300 light:text-gray-700 mb-2";
+  const errorClassName = "text-red-500 text-xs mt-1";
 
   return (
     <form onSubmit={handleSubmit} className="bg-white/5 dark:bg-white/5 light:bg-black/5 border border-white/10 dark:border-white/10 light:border-black/10 rounded-2xl p-6 md:p-8 space-y-6">
@@ -176,10 +255,13 @@ export function LeadForm() {
             name="companyName"
             value={formData.companyName}
             onChange={handleChange}
-            required
-            className={inputClassName}
+            onBlur={handleBlur}
+            className={inputClassName(!!fieldErrors.companyName && touched.companyName)}
             placeholder={t("form.companyNamePlaceholder")}
           />
+          {fieldErrors.companyName && touched.companyName && (
+            <p className={errorClassName}>{fieldErrors.companyName}</p>
+          )}
         </div>
 
         <div>
@@ -192,10 +274,13 @@ export function LeadForm() {
             name="contactName"
             value={formData.contactName}
             onChange={handleChange}
-            required
-            className={inputClassName}
+            onBlur={handleBlur}
+            className={inputClassName(!!fieldErrors.contactName && touched.contactName)}
             placeholder={t("form.contactNamePlaceholder")}
           />
+          {fieldErrors.contactName && touched.contactName && (
+            <p className={errorClassName}>{fieldErrors.contactName}</p>
+          )}
         </div>
       </div>
 
@@ -210,10 +295,13 @@ export function LeadForm() {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            required
-            className={inputClassName}
+            onBlur={handleBlur}
+            className={inputClassName(!!fieldErrors.email && touched.email)}
             placeholder={t("form.emailPlaceholder")}
           />
+          {fieldErrors.email && touched.email && (
+            <p className={errorClassName}>{fieldErrors.email}</p>
+          )}
         </div>
 
         <div>
@@ -226,10 +314,13 @@ export function LeadForm() {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            required
-            className={inputClassName}
+            onBlur={handleBlur}
+            className={inputClassName(!!fieldErrors.phone && touched.phone)}
             placeholder={t("form.phonePlaceholder")}
           />
+          {fieldErrors.phone && touched.phone && (
+            <p className={errorClassName}>{fieldErrors.phone}</p>
+          )}
         </div>
       </div>
 
@@ -243,8 +334,8 @@ export function LeadForm() {
             name="productType"
             value={formData.productType}
             onChange={handleChange}
-            required
-            className={`flex-1 h-12 px-4 rounded-lg border border-white/20 dark:border-white/20 light:border-black/20 bg-white/5 dark:bg-white/5 light:bg-black/5 text-white dark:text-white light:text-gray-900 focus:outline-none focus:ring-2 focus:ring-white/30 dark:focus:ring-white/30 light:focus:ring-black/30 ${
+            onBlur={handleBlur}
+            className={`flex-1 ${selectClassName(!!fieldErrors.productType && touched.productType)} ${
               formData.productType === "other" ? "md:flex-none md:w-1/2" : ""
             }`}
           >
@@ -262,12 +353,14 @@ export function LeadForm() {
               name="productTypeOther"
               value={formData.productTypeOther}
               onChange={handleChange}
-              required
-              className={`flex-1 ${inputClassName}`}
+              className={`flex-1 ${inputClassName(false)}`}
               placeholder={t("form.productTypeOtherPlaceholder")}
             />
           )}
         </div>
+        {fieldErrors.productType && touched.productType && (
+          <p className={errorClassName}>{fieldErrors.productType}</p>
+        )}
       </div>
 
       <div>
@@ -279,8 +372,8 @@ export function LeadForm() {
           name="budgetRange"
           value={formData.budgetRange}
           onChange={handleChange}
-          required
-          className="w-full h-12 px-4 rounded-lg border border-white/20 dark:border-white/20 light:border-black/20 bg-white/5 dark:bg-white/5 light:bg-black/5 text-white dark:text-white light:text-gray-900 focus:outline-none focus:ring-2 focus:ring-white/30 dark:focus:ring-white/30 light:focus:ring-black/30"
+          onBlur={handleBlur}
+          className={selectClassName(!!fieldErrors.budgetRange && touched.budgetRange)}
         >
           <option value="" className="bg-[#0D0D0E] dark:bg-[#0D0D0E] light:bg-white">{t("form.budgetRangePlaceholder")}</option>
           {BUDGET_RANGES.map((range) => (
@@ -289,6 +382,9 @@ export function LeadForm() {
             </option>
           ))}
         </select>
+        {fieldErrors.budgetRange && touched.budgetRange && (
+          <p className={errorClassName}>{fieldErrors.budgetRange}</p>
+        )}
       </div>
 
       <div>

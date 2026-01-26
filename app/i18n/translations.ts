@@ -131,6 +131,12 @@ export const translations = {
       successReviewOfferExpiry: "Oferta válida hasta el 27 de marzo de 2026",
       errorTerms: "Debes aceptar los términos y la política de privacidad",
       errorGeneric: "Ha ocurrido un error. Por favor, inténtalo de nuevo.",
+      errorCompanyName: "El nombre de empresa es obligatorio",
+      errorContactName: "El nombre de contacto es obligatorio",
+      errorEmail: "Introduce un email válido",
+      errorPhone: "Introduce un número de teléfono válido",
+      errorProductType: "Selecciona un tipo de producto",
+      errorBudgetRange: "Selecciona un rango de presupuesto",
     },
     productTypes: {
       "app-fitness": "App de Fitness / Gimnasio",
@@ -147,6 +153,7 @@ export const translations = {
       "other": "Otro (especificar)",
     },
     budgetRanges: {
+      "0-3000": "Menos de 3.000€",
       "3000-5000": "3.000€ - 5.000€",
       "5000-10000": "5.000€ - 10.000€",
       "10000-15000": "10.000€ - 15.000€",
@@ -363,6 +370,12 @@ export const translations = {
       successReviewOfferExpiry: "Offer valid until March 27, 2026",
       errorTerms: "You must accept the terms and privacy policy",
       errorGeneric: "An error occurred. Please try again.",
+      errorCompanyName: "Company name is required",
+      errorContactName: "Contact name is required",
+      errorEmail: "Enter a valid email",
+      errorPhone: "Enter a valid phone number",
+      errorProductType: "Select a product type",
+      errorBudgetRange: "Select a budget range",
     },
     productTypes: {
       "app-fitness": "Fitness / Gym App",
@@ -379,6 +392,7 @@ export const translations = {
       "other": "Other (specify)",
     },
     budgetRanges: {
+      "0-3000": "Less than €3,000",
       "3000-5000": "€3,000 - €5,000",
       "5000-10000": "€5,000 - €10,000",
       "10000-15000": "€10,000 - €15,000",

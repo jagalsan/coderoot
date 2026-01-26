@@ -22,6 +22,7 @@ export const PRODUCT_TYPES = [
 ]
 
 export const BUDGET_RANGES = [
+    { value: '0-3000', label: 'Menos de 3.000€', baseAmount: 2000 },
     { value: '3000-5000', label: '3.000€ - 5.000€', baseAmount: 4000 },
     { value: '5000-10000', label: '5.000€ - 10.000€', baseAmount: 7500 },
     { value: '10000-15000', label: '10.000€ - 15.000€', baseAmount: 12500 },
