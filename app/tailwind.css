@@ -1,0 +1,108 @@
+@import '../src/styles/font.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles for date input calendar icon */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  -webkit-filter: invert(1);
+  cursor: pointer;
+}
+
+/* For Firefox */
+input[type="date"]::-moz-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #030303;
+}
+
+video::-webkit-media-controls-mute-button {
+  display: none;
+}
+
+video::-webkit-media-controls-timeline {
+  display: none;
+}
+
+video::-webkit-media-controls-current-time-display {
+  display: none;
+}
+
+video::-webkit-media-controls-time-remaining-display {
+  display: none;
+}
+
+@layer base {
+  :root {
+    --background: 240 10% 7%;
+    --input: 240 5.9% 90%;
+    --radius: 0.5rem;
+  }
+}
+
+.react-tel-input,
+.react-tel-input > .form-control {
+  @apply w-full !important;
+}
+
+.react-tel-input .form-control {
+  @apply h-12 rounded-md border border-white/20 bg-white/5 text-white !important;
+}
+
+.react-tel-input .selected-flag:hover,
+.react-tel-input .selected-flag:focus,
+.react-tel-input .flag-dropdown,
+.open {
+  @apply rounded-s-md border border-white/20 bg-white/5 text-white !important;
+
+}
+
+.react-tel-input .search-box {
+  margin-left: 0 !important;
+  @apply h-12 rounded-md border border-white/20 bg-white/5 text-white !important;
+}
+
+.react-tel-input .country-list,
+.search {
+  background: hsl(var(--background)) !important;
+}
+
+.react-tel-input .country-list .country:hover,
+.react-tel-input .country-list .country.highlight {
+  @apply bg-white/20 text-white !important;
+}
+
+.react-code-input-wrapper input::-webkit-outer-spin-button,
+.react-code-input-wrapper input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.react-code-input-wrapper input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.react-code-input input {
+  background-color: hsl(var(--background)) !important;
+  border: 1px solid hsl(var(--input)) !important;
+  color: white !important;
+}
+
+* {
+  font-family: "Suisse Intl", sans-serif;
+  font-optical-sizing: auto;
+  font-kerning: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none; /* Hide the default calendar icon */
+}

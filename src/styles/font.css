@@ -1,0 +1,47 @@
+/* CoFo Drifter */
+@font-face {
+    font-family: 'CoFo Drifter';
+    src: url('/fonts/CoFo Drifter/CoFoDrifter-Regular-Trial.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'CoFo Drifter';
+    src: url('/fonts/CoFo Drifter/CoFoDrifter-Bold-Trial.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  /* Suisse Int'l */
+  @font-face {
+    font-family: 'Suisse Intl';
+    src: url('/fonts/Suisse Int\'l/SuisseIntl-Light.otf') format('opentype');
+    font-weight: 200;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Suisse Intl';
+    src: url('/fonts/Suisse Int\'l/SuisseIntl-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Suisse Intl';
+    src: url('/fonts/Suisse Int\'l/SuisseIntl-Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  /* The Silver Editorial */
+  @font-face {
+    font-family: 'The Silver Editorial';
+    src: url('/fonts/The Silver Editorial/TheSilverEditorial-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'The Silver Editorial';
+    src: url('/fonts/The Silver Editorial/TheSilverEditorial-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+  }
