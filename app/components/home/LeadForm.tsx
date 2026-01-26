@@ -90,6 +90,16 @@ export function LeadForm() {
         throw new Error("Error");
       }
 
+      // Meta Pixel Lead Event
+      if (typeof window !== 'undefined' && (window as any).fbq) {
+        (window as any).fbq('track', 'Lead', {
+          content_name: formData.productType,
+          content_category: 'MVP Request',
+          value: estimatedBudget || 0,
+          currency: 'EUR',
+        });
+      }
+
       setIsSubmitted(true);
     } catch (err) {
       setError(t("form.errorGeneric"));
