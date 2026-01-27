@@ -1,9 +1,18 @@
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 
 export function FloatingContactButton() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const scrollToForm = () => {
     document.getElementById("lead-form")?.scrollIntoView({ behavior: "smooth" });
   };
+
+  if (!isMounted) return null;
 
   return (
     <motion.button
