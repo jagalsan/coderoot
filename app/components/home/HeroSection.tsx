@@ -11,9 +11,14 @@ export function HeroSection() {
   const { t } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    if (heroImages.length <= 1) return;
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted || heroImages.length <= 1) return;
     
     const interval = setInterval(() => {
       if (!isHovered) {
@@ -22,7 +27,7 @@ export function HeroSection() {
     }, 4000);
 
     return () => clearInterval(interval);
-  }, [isHovered]);
+  }, [isHovered, isMounted]);
   
   const scrollToForm = () => {
     document.getElementById("lead-form")?.scrollIntoView({ behavior: "smooth" });

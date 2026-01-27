@@ -47,7 +47,7 @@ export function Header() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="fixed top-10 left-0 right-0 z-50 px-4 py-4"
+        className="fixed top-0 left-0 right-0 z-50 px-4 py-4 bg-[#0D0D0E]/95 dark:bg-[#0D0D0E]/95 light:bg-white/95 backdrop-blur-sm lg:bg-transparent lg:dark:bg-transparent lg:light:bg-transparent lg:backdrop-blur-none"
       >
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <a href={homeHref} className="flex items-center gap-3">
