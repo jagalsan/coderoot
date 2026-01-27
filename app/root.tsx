@@ -29,9 +29,6 @@ export default function App() {
   const { url } = useLoaderData<typeof loader>();
 
   useEffect(() => {
-    // Solo cargar scripts de tracking en producción
-    if ((import.meta as any).env?.DEV) return;
-
     // Google Tag Manager
     (function (w: any, d: Document, s: string, l: string, i: string) {
       w[l] = w[l] || [];
