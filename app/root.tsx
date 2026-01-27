@@ -30,7 +30,7 @@ export default function App() {
 
   useEffect(() => {
     // Solo cargar scripts de tracking en producción
-    if (process.env.NODE_ENV !== 'production') return;
+    if ((import.meta as any).env?.DEV) return;
 
     // Google Tag Manager
     (function (w: any, d: Document, s: string, l: string, i: string) {
