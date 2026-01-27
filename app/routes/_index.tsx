@@ -10,6 +10,7 @@ import { ReviewsSection } from "~/components/home/ReviewsSection";
 import { FormSection } from "~/components/home/FormSection";
 import { Footer } from "~/components/home/Footer";
 import { Header } from "~/components/home/Header";
+import { FloatingContactButton } from "~/components/home/FloatingContactButton";
 import { motion } from "framer-motion";
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -52,6 +53,7 @@ export default function HomePage() {
       <ReviewsSection />
       <FormSection />
       <Footer />
+      <FloatingContactButton />
     </motion.main>
   );
 }
