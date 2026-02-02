@@ -10,6 +10,7 @@ interface FormData {
   phone: string;
   companyName: string;
   productType: string;
+  productTypeOther: string;
   budgetRange: string;
   projectDescription: string;
   acceptTerms: boolean;
@@ -29,6 +30,7 @@ export function HeroLeadForm() {
     phone: "",
     companyName: "",
     productType: "",
+    productTypeOther: "",
     budgetRange: "",
     projectDescription: "",
     acceptTerms: false,
@@ -197,7 +199,7 @@ export function HeroLeadForm() {
                 <button
                   key={type.value}
                   type="button"
-                  onClick={() => setFormData({ ...formData, productType: type.value })}
+                  onClick={() => setFormData({ ...formData, productType: type.value, productTypeOther: type.value === "other" ? formData.productTypeOther : "" })}
                   className={`p-3 rounded-xl text-sm text-left transition-all ${
                     formData.productType === type.value
                       ? "bg-gradient-to-r from-yellow-500 to-orange-500 text-black font-semibold"
@@ -208,6 +210,15 @@ export function HeroLeadForm() {
                 </button>
               ))}
             </div>
+            {formData.productType === "other" && (
+              <input
+                type="text"
+                placeholder={t("form.productTypeOtherPlaceholder")}
+                value={formData.productTypeOther}
+                onChange={(e) => setFormData({ ...formData, productTypeOther: e.target.value })}
+                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500/50"
+              />
+            )}
             <div className="pt-2">
               <p className="text-xs text-gray-400 mb-2">{t("heroForm.budgetOptional")}</p>
               <select
